@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brass Rail Configurator</title>
+  <style>
+    /* Add your custom styles here */
+  </style>
+</head>
+<body>
+  <h1>Brass Rail Configurator</h1>
+
+  <label for="shelfWidth">Enter Shelf Width (in inches): </label>
+  <input type="number" id="shelfWidth" min="6" max="17">
+  <br>
+
+  <label for="shelfDepth">Enter Shelf Depth (in inches): </label>
+  <input type="number" id="shelfDepth" min="6">
+  <br>
+
+  <button onclick="generateConfiguration()">Generate Configuration</button>
+
+  <div id="result"></div>
+
+  <script>
+    function generateConfiguration() {
+      // Get user inputs
+      const shelfWidth = parseFloat(document.getElementById('shelfWidth').value);
+      const shelfDepth = parseFloat(document.getElementById('shelfDepth').value);
+
+      // Calculate required components
+      const railLength = Math.ceil(shelfWidth); // Round up to the nearest inch
+      const endPostCount = 2;
+      const middlePostCount = Math.ceil((railLength - 1) / 8); // Assuming 1/8" per middle post
+      const cornerPostCount = Math.ceil((shelfDepth - 1) / 10); // Assuming 10" corner posts
+
+      // Calculate overall rail run length
+      const overallLength = railLength + (endPostCount * 0.5) + (middlePostCount * 0.125) + (cornerPostCount * 2);
+
+      // Display the result
+      const resultElement = document.getElementById('result');
+      resultElement.innerHTML = `
+        <p>Recommended Configuration:</p>
+        <p>Rails: ${railLength}"</p>
+        <p>End Posts: ${endPostCount}</p>
+        <p>Middle Posts: ${middlePostCount}</p>
+        <p>Corner Posts: ${cornerPostCount}</p>
+        <p>Overall Length: ${overallLength}"</p>
+      `;
+    }
+  </script>
+</body>
+</html>
